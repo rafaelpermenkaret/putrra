@@ -18,7 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "@popperjs/core": "^2.11.8",
-    "axios": "^1.6.0",
+    "axios": "^1.6.0", 
     "bitly": "^7.1.2",
     "body-parser": "^1.20.1",
     "cheerio": "^1.0.0-rc.11",
@@ -46,7 +46,7 @@
     "lodash": "^4.17.21",
     "masonry-layout": "^4.2.2",
     "millify": "^6.1.0",
-    "node-fetch": "^3.3.2",
+    "node-fetch": "2.6.1", 
     "node-gtts": "^2.0.2",
     "nodemon": "^3.0.1",
     "novita-sdk": "^3.1.0",
