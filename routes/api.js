@@ -29,10 +29,7 @@ const {
   createQRIS,
   checkQRISStatus
 } = require('./orkut.js')
-const { 
-Instagram, 
-thinkany 
-} = require('../lib/scraper.js')
+
 
 function genreff() {
   const characters = '0123456789';
@@ -92,25 +89,7 @@ const messages = {
 })**/
 
 
-router.get('/downloader/ytmp3', async (req, res) => {
-    const { url } = req.query;
-    if (!url) return res.json({ message: 'URL tidak valid' });
-    
-    try {
-        let yutub = await y2matemp3(url);
-        
-        // Struktur hasil yang diinginkan
-        const result = {
-            title: yutub.title,
-            thumbnail: yutub.thumbnail,
-            url: yutub.url,
-        };
-        
-        res.json(result);
-    } catch (error) {
-        res.json({ message: 'Gagal mengunduh, terjadi kesalahan', error: error.message });
-    }
-});
+
 router.get('/orkut/createpayment', async (req, res) => {
     const { amount } = req.query;
     if (!amount) {
@@ -153,62 +132,6 @@ router.get('/orkut/cekstatus', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-router.get("/ai/thinkany", async (req, res) => {
-  const { text } = req.query;
-  if (!text) return res.status(400).json('mau tanya apa sama ai');
 
-  try {  
-    const data = await thinkany(text);
-    if (!data) return res.status(404).json(messages.notRes);
-    res.json({ status: true, creator: "Rafael", result: data });
-  } catch (e) {
-    res.status(500).json(messages.error);
-  }
-});    
-router.get("/downloader/igdl", async (req, res) => {
-  const { url } = req.query;
-  if (!url) return res.status(400).json(messages.url);
-
-  try {   
-    const data = await Instagram(url);
-    if (!data) return res.status(404).json(messages.notRes);
-    res.json({ status: true, creator: "Rafael", result: data });
-  } catch (e) {
-    res.status(500).json(messages.error);
-  }
-});   
-router.get("/downloader/tiktok", async (req, res) => {
-  const { url } = req.query;
-  if (!url) return res.status(400).json(messages.url);
-
-  try {
-  const { tiktokdl } = require("tiktokdl")
-    const data = await tiktokdl(url);
-    if (!data) return res.status(404).json(messages.notRes);
-    res.json({ status: true, creator: "Rafael", result: data });
-  } catch (e) {
-    res.status(500).json(messages.error);
-  }
-});     
-router.get('/tools/decode', async (req, res) => {
-	let text = req.query.text
-	if (!text) return res.json(loghandler.nottext)
-	if (text.length > 2048) return res.json({ status: false, code: 503, message: "maximum string is 2.048", creator: creator })
-	res.json({
-		status: true,
-		code: 200,
-		result: Buffer.from(text, 'base64').toString('ascii')
-	})
-})
-router.get('/tools/encode', async (req, res) => {
-	let text = req.query.text
-	if (!text) return res.json(loghandler.nottext)
-	if (text.length > 2048) return res.json({ message: "maximum text is 2.048" })
-	res.json({
-		status: true,
-		creator: `${creator}`,
-		result: Buffer.from(text).toString('base64')
-	})
-})
 
 module.exports = router
